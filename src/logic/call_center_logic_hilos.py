@@ -103,16 +103,15 @@ class CallCenter():
                 agentes_disponibles.append(agente)
         if len(agentes_disponibles) > 0:
             return sorted(agentes_disponibles, key=lambda x: x.factor_de_nivel())[0]
-        else: 
-            return None
+
         
     def atender_mensaje(self):
         self.lock_acceso_pila_prioridad.acquire()  # Se pide acceso
         try:
             if not self.cola_prioridad.isEmpty():
                 mensaje_analizando = self.cola_prioridad.dequeue()
-                agente = self.mirar_agente_disponible()
 
+                agente = self.mirar_agente_disponible()
                 if agente is None:
                     return "No hay agentes disponibles en este momento"
                 
@@ -131,3 +130,10 @@ class CallCenter():
         time.sleep(tiempo_estimado)
         agente.estado = "disponible"
         return salida
+
+    def procesar_mensajes(self):
+        while self.flag:
+            resultado = self.atender_mensaje()
+            if resultado:
+                print(resultado)
+            time.sleep(0.1)

@@ -19,6 +19,7 @@ def cargar_mensajes(cola_prioridad: PriorityQueue):
             mensaje = Mensaje(linea.strip())
             cola_prioridad.enqueue(mensaje)
 
+
 def main():
 
     agentes = [Agente(nivel_experiencia="basico"), Agente(nivel_experiencia="experto"), Agente(nivel_experiencia="intermedio")]
@@ -26,16 +27,16 @@ def main():
     call_center = CallCenter(agentes, cola_prioridad)
 
     cargar_mensajes(cola_prioridad)
+    if cola_prioridad.isEmpty():
+        print("No hay mensajes para procesar, se cerrará el programa")
+        return
 
-    call_center_thread = threading.Thread(target=call_center.atender_mensaje)
-    call_center_thread.start()
-
-    while call_center.flag:
-        time.sleep(1) 
+    call_center_thread = threading.Thread(target=call_center.procesar_mensajes)
+    call_center_thread.start() 
 
     call_center_thread.join()
 
-    print("\n✅ Todos los mensajes fueron procesados correctamente.")
+    print("\n Todos los mensajes fueron procesados correctamente.")
 
 
 if __name__ == "__main__":
