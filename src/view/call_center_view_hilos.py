@@ -5,7 +5,6 @@
 import sys
 import os
 import threading
-import time
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
@@ -31,10 +30,14 @@ def main():
         print("No hay mensajes para procesar, se cerrará el programa")
         return
 
-    call_center_thread = threading.Thread(target=call_center.procesar_mensajes)
-    call_center_thread.start() 
+    hilos = []
+    for agente in call_center.agentes:
+        hilo = threading.Thread(target=call_center.procesar_mensajes)
+        hilos.append(hilo)
+        hilo.start()
 
-    call_center_thread.join()
+    for hilo in hilos:
+        hilo.join()
 
     print("\n Todos los mensajes fueron procesados correctamente.")
 

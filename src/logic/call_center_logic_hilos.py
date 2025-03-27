@@ -103,6 +103,7 @@ class CallCenter():
                 agentes_disponibles.append(agente)
         if len(agentes_disponibles) > 0:
             return sorted(agentes_disponibles, key=lambda x: x.factor_de_nivel())[0]
+        return None
 
         
     def atender_mensaje(self):
