@@ -110,15 +110,15 @@ class CallCenter():
         self.lock_acceso_pila_prioridad.acquire()  # Se pide acceso
         try:
             if not self.cola_prioridad.isEmpty():
-                mensaje_analizando = self.cola_prioridad.dequeue()
+                mensaje = self.cola_prioridad.dequeue()
 
                 agente = self.mirar_agente_disponible()
                 if agente is None:
                     return "No hay agentes disponibles en este momento"
                 
                 agente.estado = "ocupado"
-                tiempo_estimado = agente.tiempo_estimado(mensaje_analizando)
-                salida = (f"📩 Mensaje atendido: '{mensaje_analizando.mensaje}' \n"
+                tiempo_estimado = agente.tiempo_estimado(mensaje)
+                salida = (f"📩 Mensaje atendido: '{mensaje.mensaje}' \n"
                           f"🤵 Agente #{agente.id} respondió en {tiempo_estimado} segundos\n")
             
             else:
