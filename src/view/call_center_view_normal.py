@@ -14,8 +14,7 @@ def cargar_mensajes(cola_prioridad: PriorityQueue):
     ruta = os.path.join(os.path.dirname(__file__), "mensajes.txt")
     with open(ruta, "r", encoding = "utf-8") as file:
         for linea in file:
-            mensaje_limpio = linea.strip().lower()  # Limpia espacios y pone en minúsculas
-            mensaje = Mensaje(mensaje_limpio)
+            mensaje = Mensaje(linea.strip())
             cola_prioridad.enqueue(mensaje)
 
 def main():
@@ -28,8 +27,8 @@ def main():
     while not cola_prioridad.isEmpty():
         mensaje, tiempo_respuesta, agente_id = call_center.atender_mensaje()
         if mensaje:
-            print(f"El mensaje: {mensaje}, fue procesador por el agente {agente_id}")
-            print(f"El tiempo de respuesta fue: {tiempo_respuesta} segundos")
+            print(f"📩 Mensaje atendido: '{mensaje.mensaje}'")
+            print(f"🤵 Agente #{agente_id} respondió en {tiempo_respuesta} segundos\n")
         else:
             print("No hay mensajes por atender")
             break
