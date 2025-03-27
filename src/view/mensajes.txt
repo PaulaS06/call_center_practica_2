@@ -1,0 +1,5 @@
+emergencia, urgente, tengo una problema
+urgencia
+importante, urgente, tengo una problema
+emergencia
+urgente, tengo una problema
