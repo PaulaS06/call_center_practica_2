@@ -90,9 +90,9 @@ class Agente:
 
 
 class CallCenter():
-    def __init__(self, agentes: list[Agente], cola_prioridad_mensajes: PriorityQueue):
+    def __init__(self, agentes: list[Agente], cola_prioridad: PriorityQueue):
         self.agentes: list[Agente] = agentes
-        self.cola_prioridad: PriorityQueue = cola_prioridad_mensajes
+        self.cola_prioridad: PriorityQueue = cola_prioridad
         self.lock_acceso_pila_prioridad = threading.Lock()
         self.flag: bool = True
 
